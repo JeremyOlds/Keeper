@@ -55,3 +55,12 @@ DROP TABLE vaultKeeps;
         FROM keeps
         JOIN accounts acc ON acc.id = keeps.creatorId
         ;
+
+                SELECT
+        keeps.*,
+        acc.*,
+        COUNT(vk.id) AS kept
+        FROM keeps
+        LEFT JOIN vaultKeeps vk ON vk.keepId = keeps.id
+        JOIN accounts acc ON acc.id = keeps.creatorId
+        WHERE keeps.id = 8;

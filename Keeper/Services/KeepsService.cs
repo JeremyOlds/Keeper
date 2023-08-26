@@ -36,10 +36,11 @@ public class KeepsService
     internal Keep GetKeepById(int keepId)
     {
       Keep keep = _keepsRepository.GetKeepById(keepId);
-      if(keep == null)
+      if(keep.Name == null)
       {
         throw new Exception($"Invalid Id: {keepId}");
       }
+
       return keep;
 
     }
