@@ -29,7 +29,8 @@ public class KeepsRepository
         SET
         name = @Name,
         description = @Description,
-        img = @Img
+        img = @Img,
+        views = @Views
         WHERE id = @id
         ;";
         _db.Execute(sql, originalKeep);
@@ -41,8 +42,8 @@ public class KeepsRepository
         string sql = @"
         SELECT
         keeps.*,
-        acc.*,
-        COUNT(vk.id) AS kept
+        COUNT(vk.id) AS kept,
+        acc.*
         FROM keeps
         LEFT JOIN vaultKeeps vk ON vk.keepId = keeps.id
         JOIN accounts acc ON acc.id = keeps.creatorId
@@ -78,6 +79,18 @@ public class KeepsRepository
             return keep;
           }
         ).ToList();
+        return keeps;
+    }
+
+    internal List<Keep> GetProfileKeeps(string profileId)
+    {
+        string sql = @"
+        SELECT
+        *
+        FROM keeps
+        WHERE creatorId = @profileId
+        ;";
+        List<Keep> keeps = _db.Query<Keep>(sql, new {profileId}).ToList();
         return keeps;
     }
 

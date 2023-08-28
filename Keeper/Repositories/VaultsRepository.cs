@@ -18,8 +18,8 @@ public class VaultsRepository
     internal int CreateVault(Vault vaultData)
     {
         string sql = @"
-        INSERT INTO vaults(creatorId, name, description, img)
-        VALUES(@CreatorId, @Name, @Description, @Img);
+        INSERT INTO vaults(creatorId, name, description, img, isPrivate)
+        VALUES(@CreatorId, @Name, @Description, @Img, @IsPrivate);
         SELECT LAST_INSERT_ID();
         ;";
 
@@ -40,6 +40,32 @@ public class VaultsRepository
         ;";
 
         _db.Execute(sql, originalVault);
+    }
+
+    internal List<Vault> GetAccountVaults(string userId)
+    {
+        string sql = @"
+        SELECT
+        *
+        FROM vaults
+        WHERE creatorId = @userId
+        ;";
+
+        List<Vault> vaults = _db.Query<Vault>(sql, new {userId}).ToList();
+        return vaults;
+    }
+
+    internal List<Vault> GetProfileVaults(string profileId)
+    {
+        string sql = @"
+        SELECT
+        *
+        FROM vaults
+        WHERE creatorId = @profileId
+        ;";
+
+        List<Vault> vaults = _db.Query<Vault>(sql, new {profileId}).ToList();
+        return vaults;
     }
 
     internal Vault GetVaultById(int vaultId)

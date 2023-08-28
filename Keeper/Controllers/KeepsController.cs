@@ -47,12 +47,13 @@ public ActionResult<List<Keep>> GetKeeps()
   }
 }
 [HttpGet("{keepId}")]
-public ActionResult<Keep> getKeepById(int keepId)
+public async Task<ActionResult<Keep>> getKeepById(int keepId)
 {
   try 
   {
-  Keep keep = _keepsService.GetKeepById(keepId);
-  return Ok(keep);
+    Account userInfo = await _auth.GetUserInfoAsync<Account>(HttpContext);
+    Keep keep = _keepsService.GetKeepByIdAndIncreaseViews(keepId, userInfo?.Id);
+    return Ok(keep);
   }
   catch (Exception e)
   {

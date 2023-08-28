@@ -44,11 +44,28 @@ public class KeepsService
       return keep;
 
     }
+    internal Keep GetKeepByIdAndIncreaseViews(int keepId, string userId)
+    {
+      Keep keep = GetKeepById(keepId);
+      if(keep.CreatorId != userId)
+      {
+      keep.Views++;
+      _keepsRepository.EditKeep(keep);
+      }
+      return keep;
+
+    }
 
     internal List<Keep> GetKeeps()
     {
       List<Keep> keeps = _keepsRepository.GetKeeps();
       return keeps;
+    }
+
+    internal List<Keep> GetProfileKeeps(string profileId)
+    {
+        List<Keep> keeps = _keepsRepository.GetProfileKeeps(profileId);
+        return keeps;
     }
 
     internal void RemoveKeep(int keepId, string userId)
