@@ -70,4 +70,15 @@ public class VaultKeepsRepository
         ;";
         _db.Execute(sql, new {vaultKeepId});
     }
+    internal List<VaultKeep> GetVaultKeeps()
+    {
+        string sql = @"
+        SELECT
+        *
+        FROM vaultKeeps
+        ;";
+
+        List<VaultKeep> vaultkeeps = _db.Query<VaultKeep>(sql).ToList();
+        return vaultkeeps;
+    }
 }

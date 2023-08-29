@@ -1,8 +1,8 @@
 <template>
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark px-3">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-light px-3 d-flex justify-content-between">
     <router-link class="navbar-brand d-flex" :to="{ name: 'Home' }">
-      <div class="d-flex flex-column align-items-center">
-        <img alt="logo" src="../assets/img/cw-logo.png" height="45" />
+      <div class="d-flex flex-column align-items-center bg-grey rounded">
+        <p class="fs-3 mt-1">Home</p>
       </div>
     </router-link>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText"
@@ -12,9 +12,17 @@
     <div class="collapse navbar-collapse" id="navbarText">
       <ul class="navbar-nav me-auto">
         <li>
-          <router-link :to="{ name: 'About' }" class="btn text-success lighten-30 selectable text-uppercase">
-            About
-          </router-link>
+          <div class="dropdown">
+            <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton1"
+              data-bs-toggle="dropdown" aria-expanded="false">
+              Dropdown button
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+              <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#keepForm">Create Keep</a></li>
+              <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#vaultForm">Create Vault</a>
+              </li>
+            </ul>
+          </div>
         </li>
       </ul>
       <!-- LOGIN COMPONENT HERE -->
@@ -24,10 +32,14 @@
 </template>
 
 <script>
+import { computed } from "vue";
 import Login from './Login.vue';
+import { AppState } from "../AppState.js";
 export default {
   setup() {
-    return {}
+    return {
+      account: computed(() => AppState.account)
+    }
   },
   components: { Login }
 }

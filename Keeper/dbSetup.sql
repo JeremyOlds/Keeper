@@ -4,7 +4,8 @@ CREATE TABLE IF NOT EXISTS accounts(
   updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Last Update',
   name varchar(255) COMMENT 'User Name',
   email varchar(255) COMMENT 'User Email',
-  picture varchar(255) COMMENT 'User Picture'
+  picture varchar(255) COMMENT 'User Picture',
+  coverImg varchar(500) COMMENT 'User coverImg'
 ) default charset utf8 COMMENT '';
 
 CREATE TABLE keeps(
@@ -45,6 +46,7 @@ CREATE TABLE vaultKeeps(
 
 
 DROP TABLE keeps;
+DROP TABLE accounts;
 
 DROP TABLE vaults;
 DROP TABLE vaultKeeps;

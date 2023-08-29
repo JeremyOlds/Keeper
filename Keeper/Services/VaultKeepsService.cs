@@ -25,6 +25,14 @@ public class VaultKeepsService
       {
         throw new Exception("You cannot create a VaultKeep for someone else's vault.");
       }
+      List<VaultKeep> vaultKeeps = _vaultKeepsRepository.GetVaultKeeps();
+      vaultKeeps.ForEach(vk => 
+      {
+        if(vk.keepId == vaultKeepData.keepId && vk.VaultId == vaultKeepData.VaultId)
+        {
+          throw new Exception("you cannot have multiple copies of keeps in your vault");
+        }
+      });
         int vaultKeepId = _vaultKeepsRepository.CreateVaultKeep(vaultKeepData);
 
       VaultKeep vaultKeep = GetVaultKeepById(vaultKeepId);

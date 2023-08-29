@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "masonry": "^0.0.2",
+    "masonry-layout": "^4.2.2"
+  }
+}
