@@ -56,7 +56,7 @@ export default {
 .avatar {
   object-fit: cover;
   position: absolute;
-  bottom: 8px;
+  top: 8px;
   right: 16px;
   height: 5vh;
   width: 5vh;
