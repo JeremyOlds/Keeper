@@ -21,7 +21,7 @@
           <div v-if="account.id == keep.creatorId" class="col-6 d-flex justify-content-end ">
             <button @click="removeKeep(keep.id)" title="Remove Keep" class="btn btn-danger my-1 mx-1">Remove Keep</button>
           </div>
-          <div v-if="activeVault.id" class="col-6 d-flex justify-content-start">
+          <div v-if="activeVault.id && account.id == activeVault.creator.id" class="col-6 d-flex justify-content-start">
             <button @click="removeVaultKeep(keep.vaultKeepId)" class="btn btn-danger mx-1 my-1">Remove from Vault</button>
           </div>
         </div>

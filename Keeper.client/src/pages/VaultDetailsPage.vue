@@ -7,7 +7,8 @@
   <div class="d-flex justify-content-center py-3">
     <p class="bg-info rounded p-2 fw-bold">Keeps {{ keeps.length }}</p>
     <div>
-      <button @click="removeVault(vault.id)" class="btn btn-danger" title="Delete vault">Delete</button>
+      <button v-if="account.id == vault.creator.id" @click="removeVault(vault.id)" class="btn btn-danger"
+        title="Delete vault">Delete Vault</button>
       <button v-if="account.id == vault.creator.id" @click="ToggleVaultPrivate()" title="Toggle Private"
         class="btn btn-primary">Toggle Private</button>
     </div>
