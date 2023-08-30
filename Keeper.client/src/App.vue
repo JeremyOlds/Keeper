@@ -13,7 +13,7 @@
     </template>
   </ModalComponent>
 
-  <FormModalComponent id="keepForm">
+  <FormModalComponent id="keepForm" aria-labelledby="keepForm">
     <template #header>
       Create a Keep!
     </template>
@@ -22,7 +22,7 @@
     </template>
   </FormModalComponent>
 
-  <FormModalComponent id="vaultForm">
+  <FormModalComponent id="vaultForm" aria-labelledby="vaultForm">
     <template #header>
       Create a Vault!
     </template>
@@ -31,7 +31,7 @@
     </template>
   </FormModalComponent>
 
-  <FormModalComponent id="accountForm">
+  <FormModalComponent id="accountForm" aria-labelledby="accountForm">
 
     <template #header>
       Edit Account!

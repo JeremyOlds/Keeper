@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="masonry-with-columns">
     <div v-for="k in keeps" :key="k.id">
       <KeepComponent :keep="k" />
     </div>
@@ -7,15 +7,15 @@
 </template>
 
 <script>
-import { computed, onMounted, watchEffect } from "vue";
+import { computed, onMounted, onUnmounted, watchEffect } from "vue";
 import Pop from "../utils/Pop.js";
 import { logger } from "../utils/Logger.js";
 import { keepsService } from "../services/KeepsService.js"
 import { AppState } from "../AppState.js";
 import KeepComponent from "../components/KeepComponent.vue";
 import { useRoute } from "vue-router";
-import { Account } from "../models/Account.js";
 import { vaultsService } from "../services/VaultsService.js";
+import { appstateService } from "../services/AppstateService.js";
 
 export default {
   setup() {
@@ -41,12 +41,23 @@ export default {
         logger.log(error)
       }
     }
+    function clearAppStateHomePage() {
+      try {
+        appstateService.clearProfileAppState()
+      } catch (error) {
+        Pop.error(error.message)
+        logger.log(error)
+      }
+    }
     watchEffect(() => {
-      route
+      route.fullPath
       getKeeps()
       if (AppState.account.id) {
         getMyVaults()
       }
+    })
+    onUnmounted(() => {
+      clearAppStateHomePage()
     })
     return {
       keeps: computed(() => AppState.keeps)
@@ -57,19 +68,38 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.container {
-  display: grid;
-  gap: 10px;
-  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-  grid-template-rows: minmax(10px, 1fr);
+.masonry-with-columns {
+  columns: 4 200px;
+  column-gap: 1rem;
+
+
+  div {
+    width: 150px;
+    display: inline-block;
+    width: 100%;
+    margin-bottom: .5rem;
+    margin-top: .5rem;
+    // margin: 0 1rem 1rem 0;
+  }
 }
 
 @media screen and (max-width: 769px) {
-  .container {
-    display: grid;
-    gap: 10px;
-    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-    grid-template-rows: minmax(10px, 1fr);
+  .masonry-with-columns {
+    columns: 2 100px;
+    column-gap: 1rem;
+
+
+    div {
+      width: 150px;
+      display: inline-block;
+      width: 100%;
+      margin-bottom: .5rem;
+      margin-top: .5rem;
+      // margin: 0 1rem 1rem 0;
+    }
   }
 }
 </style>
+
+
+

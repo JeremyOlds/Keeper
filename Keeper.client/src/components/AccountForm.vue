@@ -2,15 +2,15 @@
   <form @submit.prevent="editAccount()">
     <div>
       <label for="name">Name</label>
-      <input v-model="editable.name" class="form-control" type="text" maxlength="50">
+      <input id="name" v-model="editable.name" class="form-control" type="text" maxlength="50">
     </div>
     <div>
       <label for="picture">Picture</label>
-      <input v-model="editable.picture" class="form-control" type="url" maxlength="500">
+      <input id="picture" v-model="editable.picture" class="form-control" type="url" maxlength="500">
     </div>
     <div>
       <label for="coverImg">Cover Image</label>
-      <input v-model="editable.coverImg" class="form-control" type="url" maxlength="500">
+      <input id="coverImg" v-model="editable.coverImg" class="form-control" type="url" maxlength="500">
     </div>
     <div class="mt-2">
       <input type="submit" class="btn btn-success">

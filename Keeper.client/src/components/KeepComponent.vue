@@ -1,8 +1,8 @@
 <template>
-  <div @click="getActiveKeep(keep.id)" class="relative elevation-3 selectable" data-bs-toggle="modal"
+  <div @click="setActiveKeep(keep.id)" class="relative elevation-3 selectable" data-bs-toggle="modal"
     data-bs-target="#keepDetails">
-    <img class="img-fluid" style="width: 100%;" :src="keep.img" :alt="keep.name">
-    <p class="absolute fs-5 fw-bold m-0 ">{{ keep.name }}</p>
+    <img class="" style="width: 100%;" :src="keep.img" :alt="keep.name">
+    <p class="absolute name fs-5 fw-bold m-0 ">{{ keep.name }}</p>
     <img class="avatar" :title="keep.creator.name" :src="keep.creator.picture" :alt="keep.creator.name">
   </div>
 </template>
@@ -24,9 +24,9 @@ export default {
 
     return {
 
-      async getActiveKeep(keepId) {
+      setActiveKeep(keepId) {
         try {
-          await keepsService.getActiveKeep(keepId)
+          keepsService.setActiveKeep(keepId)
         } catch (error) {
           Pop.error(error.message)
           logger.log(error)
@@ -49,7 +49,7 @@ export default {
 
 .absolute {
   position: absolute;
-  bottom: 8px;
+  bottom: 15px;
   left: 16px;
 }
 
@@ -64,6 +64,11 @@ export default {
 }
 
 .name {
-  text-shadow: 5px 5px blue;
+  color: black;
+  text-shadow:
+    -1px -1px 0 white,
+    1px -1px 0 white,
+    -1px 1px 0 white,
+    1px 1px 0 white;
 }
 </style>

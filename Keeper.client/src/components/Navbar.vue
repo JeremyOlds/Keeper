@@ -5,21 +5,23 @@
         <p class="fs-3 mt-1">Home</p>
       </div>
     </router-link>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText"
+    <button class="navbar-toggler bg-dark" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText"
       aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarText">
       <ul class="navbar-nav me-auto">
         <li>
-          <div class="dropdown">
-            <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton1"
-              data-bs-toggle="dropdown" aria-expanded="false">
-              Dropdown button
+          <div v-if="account.id" class="dropdown">
+            <button class="btn btn-primary dropdown-toggle" type="button" id="createDropdown" data-bs-toggle="dropdown"
+              title="">
+              Create!
             </button>
-            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-              <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#keepForm">Create Keep</a></li>
-              <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#vaultForm">Create Vault</a>
+            <ul class="dropdown-menu" aria-labelledby="createDropdown">
+              <li><a class="dropdown-item" title="Create Keep" href="#" data-bs-toggle="modal"
+                  data-bs-target="#keepForm">Create Keep</a></li>
+              <li><a class="dropdown-item" href="#" title="Create Vault" data-bs-toggle="modal"
+                  data-bs-target="#vaultForm">Create Vault</a>
               </li>
             </ul>
           </div>

@@ -1,21 +1,23 @@
 <template>
   <form @submit.prevent="createVault()">
     <div>
-      <label for="name">Name</label>
-      <input v-model="editable.name" id="name" type="text" required class="form-control" maxlength="50">
+      <label for="vaultName">Name</label>
+      <input title="Vault Name" v-model="editable.name" id="vaultName" type="text" required class="form-control"
+        maxlength="50">
     </div>
     <div>
-      <label for="img">Img</label>
-      <input v-model="editable.img" class="form-control" type="url" required id="img" maxlength="500">
+      <label for="vaultImg">Img</label>
+      <input title="Vault Image" v-model="editable.img" class="form-control" type="url" required id="vaultImg"
+        maxlength="500">
     </div>
     <div>
-      <label for="description">Description</label>
-      <textarea v-model="editable.description" class="form-control" name="description" id="description" maxlength="500"
-        cols="30" rows="10"></textarea>
+      <label for="vaultDescription">Description</label>
+      <textarea title="aultDescription" v-model="editable.description" class="form-control" name="vaultDescription"
+        id="vaultDescription" maxlength="500" cols="30" rows="10"></textarea>
     </div>
     <div>
       <label for="isPrivate">Is Private?</label>
-      <input v-model="editable.isPrivate" type="checkbox" id="isPrivate">
+      <input title="is the Vault Private?" v-model="editable.isPrivate" type="checkbox" id="isPrivate">
     </div>
     <div>
       <input type="submit" class="btn btn-success">

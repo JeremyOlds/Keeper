@@ -37,6 +37,8 @@ public class KeepsRepository
         
     }
 
+
+
     internal Keep GetKeepById(int keepId)
     {
         string sql = @"
@@ -86,11 +88,20 @@ public class KeepsRepository
     {
         string sql = @"
         SELECT
-        *
+        keeps.*,
+        acc.*
         FROM keeps
-        WHERE creatorId = @profileId
+        JOIN accounts acc ON acc.id = keeps.creatorId
+        WHERE keeps.creatorId = @profileId
         ;";
-        List<Keep> keeps = _db.Query<Keep>(sql, new {profileId}).ToList();
+        List<Keep> keeps = _db.Query<Keep, Profile, Keep>(
+          sql,
+          (keep, profile)=>
+          {
+            keep.Creator = profile;
+            return keep;
+          }
+          ,new {profileId}).ToList();
         return keeps;
     }
 

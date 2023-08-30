@@ -8,13 +8,11 @@ class KeepsService {
   async getKeeps() {
     const res = await api.get('api/keeps')
     AppState.keeps = res.data.map(k => new Keep(k))
-    logger.log('Appstate keeps', AppState.keeps)
+    // logger.log('Appstate keeps', AppState.keeps)
   }
-  async getActiveKeep(keepId) {
-    const res = await api.get(`api/keeps/${keepId}`)
-    // logger.log("getting active Keep from server", res.data)
-    AppState.activeKeep = new Keep(res.data)
-    // logger.log('appstate active keep', AppState.activeKeep)
+  setActiveKeep(keepId) {
+    const foundKeep = AppState.keeps.find(k => k.id == keepId)
+    AppState.activeKeep = foundKeep
   }
   async createKeep(formData) {
     const res = await api.post('api/keeps', formData)
@@ -25,11 +23,22 @@ class KeepsService {
   async getKeepsByVaultId(vaultId) {
     const res = await api.get(`api/vaults/${vaultId}/keeps`)
     AppState.keeps = res.data.map(k => new Keep(k))
+    // logger.log('keeps by vault id appState', AppState.keeps)
   }
   async getMyKeeps(profileId) {
     const res = await api.get(`api/profiles/${profileId}/keeps`)
-    AppState.myKeeps = res.data.map(k => new Keep(k))
-    logger.log(AppState.myKeeps, 'mykeeps appstate')
+    AppState.keeps = res.data.map(k => new Keep(k))
+    // logger.log(AppState.keeps, 'mykeeps appstate')
+  }
+  async getProfileKeeps(profileId) {
+    const res = await api.get(`api/profiles/${profileId}/keeps`)
+    AppState.keeps = res.data.map(k => new Keep(k))
+  }
+  async removeKeep(keepId) {
+    await api.delete(`api/keeps/${keepId}`)
+    const foundkeepIndex = AppState.keeps.findIndex(k => k.id == keepId)
+    AppState.keeps.splice(foundkeepIndex, 1)
+    AppState.activeKeep = {}
   }
 
 }

@@ -1,14 +1,12 @@
 <template>
   <div class="d-flex justify-content-center mt-5">
-    <img class="coverImg rounded" :src="account.coverImg" alt="">
+    <img class="coverImg rounded" :src="profile.coverImg" alt="">
   </div>
   <div class="d-flex justify-content-center pt-5">
-    <img class="accountImg" :src="account.picture" :alt="account.name">
+    <img class="accountImg" :src="profile.picture" :alt="profile.name">
   </div>
   <div class="d-flex justify-content-center">
-    <h1 class="me-3">{{ account.name }}</h1>
-    <button data-bs-toggle="modal" title="edit Account" data-bs-target="#accountForm" class="btn btn-primary my-2">Edit
-      Account</button>
+    <h1 class="me-3">{{ profile.name }}</h1>
   </div>
   <div class="d-flex justify-content-center">
     <p>Vaults {{ vaults.length }} | Keeps {{ keeps.length }}</p>
@@ -39,39 +37,51 @@
   </div>
 </template>
 
+
 <script>
-import { computed, onUnmounted, watchEffect } from 'vue';
-import { AppState } from '../AppState';
-import { vaultsService } from "../services/VaultsService.js";
+import { computed, onUnmounted, watchEffect } from "vue";
+import { useRoute } from "vue-router";
 import Pop from "../utils/Pop.js";
 import { logger } from "../utils/Logger.js";
+import { profilesService } from "../services/ProfilesService.js"
 import { keepsService } from "../services/KeepsService.js";
-import { useRoute } from "vue-router";
-import KeepComponent from "../components/KeepComponent.vue";
+import { vaultsService } from "../services/VaultsService.js";
 import { appstateService } from "../services/AppstateService.js";
+import { AppState } from "../AppState.js";
+
 export default {
   setup() {
-    const route = useRoute();
-    async function getMyVaults() {
+
+    const route = useRoute()
+
+    async function getProfileById() {
       try {
-        await vaultsService.getMyVaults();
-      }
-      catch (error) {
-        Pop.error(error.message);
-        logger.log(error);
+        const profileId = route.params.profileId
+        await profilesService.getProfileById(profileId)
+      } catch (error) {
+        Pop.error(error.message)
+        logger.log(error)
       }
     }
-    async function getMyKeeps() {
+    async function getProfileKeeps() {
       try {
-        const profileId = AppState.account.id;
-        await keepsService.getMyKeeps(profileId);
-      }
-      catch (error) {
-        Pop.error(error.message);
-        logger.log(error);
+        const profileId = route.params.profileId
+        await keepsService.getProfileKeeps(profileId)
+      } catch (error) {
+        Pop.error(error.message)
+        logger.log(error)
       }
     }
-    function clearAppStateAccountPage() {
+    async function getProfileVaults() {
+      try {
+        const profileId = route.params.profileId
+        await vaultsService.getProfileVaults(profileId)
+      } catch (error) {
+        Pop.error(error.message)
+        logger.log(error)
+      }
+    }
+    function clearProfileAppState() {
       try {
         appstateService.clearProfileAppState()
       } catch (error) {
@@ -81,38 +91,25 @@ export default {
     }
 
     watchEffect(() => {
-      route;
-      getMyKeeps();
-      getMyVaults();
+      route.params.profileId
+      getProfileById()
+      getProfileKeeps()
+      getProfileVaults()
     })
     onUnmounted(() => {
-      clearAppStateAccountPage()
+      clearProfileAppState()
     })
     return {
-      account: computed(() => AppState.account),
+      vaults: computed(() => AppState.vaults),
       keeps: computed(() => AppState.keeps),
-      vaults: computed(() => AppState.vaults)
-    };
-  },
-  components: { KeepComponent }
+      profile: computed(() => AppState.activeProfile)
+    }
+  }
 }
 </script>
 
-<style scoped lang="scss">
-.masonry-with-columns {
-  columns: 4 200px;
-  column-gap: 1rem;
 
-
-  div {
-    width: 150px;
-    display: inline-block;
-    width: 100%;
-    margin-bottom: .5rem;
-    margin-top: .5rem;
-  }
-}
-
+<style lang="scss" scoped>
 .vault-img {
   width: 100%;
   min-height: 100%;
@@ -137,7 +134,7 @@ export default {
 
 .coverImg {
   max-width: 20%;
-  // height:;
+  // height: 40vh;
 }
 
 .vault-div {
@@ -163,6 +160,19 @@ export default {
   right: 16px;
 }
 
+.masonry-with-columns {
+  columns: 4 200px;
+  column-gap: 1rem;
+
+
+  div {
+    width: 150px;
+    display: inline-block;
+    width: 100%;
+    margin-bottom: .5rem;
+    margin-top: .5rem;
+  }
+}
 
 @media screen and (max-width: 769px) {
   .masonry-with-columns {
