@@ -10,9 +10,9 @@ class KeepsService {
     AppState.keeps = res.data.map(k => new Keep(k))
     // logger.log('Appstate keeps', AppState.keeps)
   }
-  setActiveKeep(keepId) {
-    const foundKeep = AppState.keeps.find(k => k.id == keepId)
-    AppState.activeKeep = foundKeep
+  async getActiveKeep(keepId) {
+    const res = await api.get(`api/keeps/${keepId}`)
+    AppState.activeKeep = new Keep(res.data)
   }
   async createKeep(formData) {
     const res = await api.post('api/keeps', formData)

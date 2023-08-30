@@ -44,7 +44,7 @@
 </template>
 
 <script>
-import { computed } from 'vue'
+import { computed, onMounted, watchEffect } from 'vue'
 import { AppState } from './AppState'
 import Navbar from './components/Navbar.vue'
 import ModalComponent from "./components/ModalComponent.vue"
@@ -53,9 +53,28 @@ import FormModalComponent from "./components/FormModalComponent.vue"
 import KeepForm from "./components/KeepForm.vue"
 import VaultForm from "./components/VaultForm.vue"
 import AccountForm from "./components/AccountForm.vue"
+import { vaultsService } from "./services/VaultsService.js"
+import Pop from "./utils/Pop.js"
+import { logger } from "./utils/Logger.js"
 
 export default {
   setup() {
+
+    watchEffect(() => {
+      if (AppState.account.id) {
+        getMyVaults()
+      }
+    })
+
+    async function getMyVaults() {
+      try {
+        await vaultsService.getMyVaults()
+      } catch (error) {
+        Pop.error(error.message)
+        logger.log(error)
+      }
+    }
+
     return {
       appState: computed(() => AppState)
     }

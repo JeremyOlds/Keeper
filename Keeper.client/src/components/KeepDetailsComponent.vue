@@ -54,7 +54,7 @@
 
 
 <script>
-import { computed } from "vue";
+import { computed, } from "vue";
 import { AppState } from "../AppState.js";
 import Pop from "../utils/Pop.js";
 import { logger } from "../utils/Logger.js";
@@ -66,10 +66,9 @@ import { Modal } from "bootstrap";
 export default {
   setup() {
 
-
     return {
       keep: computed(() => AppState.activeKeep),
-      vaults: computed(() => AppState.vaults),
+      vaults: computed(() => AppState.myVaults),
       account: computed(() => AppState.account),
       activeVault: computed(() => AppState.activeVault),
 

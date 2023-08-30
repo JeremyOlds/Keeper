@@ -54,7 +54,7 @@ export default {
     const route = useRoute();
     async function getMyVaults() {
       try {
-        await vaultsService.getMyVaults();
+        await vaultsService.getAccountVaults();
       }
       catch (error) {
         Pop.error(error.message);
