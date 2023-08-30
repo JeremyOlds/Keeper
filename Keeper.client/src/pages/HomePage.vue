@@ -1,5 +1,5 @@
 <template>
-  <div class="masonry-with-columns">
+  <div class="masonry-with-columns px-3">
     <div v-for="k in keeps" :key="k.id">
       <KeepComponent :keep="k" />
     </div>
@@ -49,13 +49,18 @@ export default {
         logger.log(error)
       }
     }
-    watchEffect(() => {
-      route.fullPath
+    // watchEffect(() => {
+    //   route.fullPath
+    //   getKeeps()
+    //   if (AppState.account.id) {
+    //     getMyVaults()
+    //   }
+    // })
+
+    onMounted(() => {
       getKeeps()
-      if (AppState.account.id) {
-        getMyVaults()
-      }
     })
+
     onUnmounted(() => {
       clearAppStateHomePage()
     })

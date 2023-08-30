@@ -1,16 +1,16 @@
 <template>
   <form @submit.prevent="editAccount()">
     <div>
-      <label for="name">Name</label>
-      <input id="name" v-model="editable.name" class="form-control" type="text" maxlength="50">
+      <label for="accountName">Name</label>
+      <input id="accountName" v-model="editable.name" class="form-control" type="text" maxlength="50">
     </div>
     <div>
-      <label for="picture">Picture</label>
-      <input id="picture" v-model="editable.picture" class="form-control" type="url" maxlength="500">
+      <label for="accountPicture">Picture</label>
+      <input id="accountPicture" v-model="editable.picture" class="form-control" type="url" maxlength="500">
     </div>
     <div>
-      <label for="coverImg">Cover Image</label>
-      <input id="coverImg" v-model="editable.coverImg" class="form-control" type="url" maxlength="500">
+      <label for="accountCoverImg">Cover Image</label>
+      <input id="accountCoverImg" v-model="editable.coverImg" class="form-control" type="url" maxlength="500">
     </div>
     <div class="mt-2">
       <input type="submit" class="btn btn-success">

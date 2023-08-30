@@ -7,13 +7,13 @@
   <div class="d-flex justify-content-center py-3">
     <p class="bg-info rounded p-2 fw-bold">Keeps {{ keeps.length }}</p>
     <div>
-      <button v-if="account.id == vault.creator.id" @click="removeVault(vault.id)" class="btn btn-danger"
+      <button v-if="account.id == vault.creator?.id" @click="removeVault(vault.id)" class="btn btn-danger"
         title="Delete vault">Delete Vault</button>
-      <button v-if="account.id == vault.creator.id" @click="ToggleVaultPrivate()" title="Toggle Private"
+      <button v-if="account.id == vault.creator?.id" @click="ToggleVaultPrivate()" title="Toggle Private"
         class="btn btn-primary">Toggle Private</button>
     </div>
   </div>
-  <div class="masonry-with-columns">
+  <div class="masonry-with-columns px-3">
     <div v-for="k in keeps" :key="k.id">
       <KeepComponent :keep="k" />
     </div>
@@ -22,7 +22,7 @@
 
 
 <script>
-import { computed, onUnmounted, watchEffect } from "vue";
+import { computed, onMounted, onUnmounted } from "vue";
 import { AppState } from "../AppState.js";
 import { useRoute } from "vue-router";
 import Pop from "../utils/Pop.js";
@@ -57,11 +57,21 @@ export default {
         logger.log(error);
       }
     }
-    watchEffect(() => {
-      route.params.VaultId;
+
+    // watchEffect(() => {
+    //   route.params.VaultId;
+    //   if (AppState.account.id) {
+    //     getVaultById();
+    //     getKeepsByVaultId();
+    //   }
+    // })
+
+    onMounted(() => {
       getVaultById();
       getKeepsByVaultId();
+
     })
+
     function clearAppstateVaultPage() {
       try {
         appstateService.clearAppstateVaultPage()

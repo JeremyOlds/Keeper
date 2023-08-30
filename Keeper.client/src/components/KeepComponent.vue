@@ -1,5 +1,5 @@
 <template>
-  <div @click="getActiveKeep(keep.id)" class="relative elevation-3 selectable" data-bs-toggle="modal"
+  <div @click="getActiveKeep(keep)" class="relative elevation-3 selectable" data-bs-toggle="modal"
     data-bs-target="#keepDetails">
     <img class="" style="width: 100%;" :src="keep.img" :alt="keep.name">
     <p class="absolute name fs-5 fw-bold m-0 ">{{ keep.name }}</p>
@@ -24,9 +24,9 @@ export default {
 
     return {
 
-      getActiveKeep(keepId) {
+      getActiveKeep(keep) {
         try {
-          keepsService.getActiveKeep(keepId)
+          keepsService.getActiveKeep(keep)
         } catch (error) {
           Pop.error(error.message)
           logger.log(error)

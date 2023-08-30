@@ -1,8 +1,9 @@
 <template>
   <form @submit.prevent="createKeep()">
     <div class="">
-      <label for="name">Name</label>
-      <input title="Keep name" class="form-control" v-model="editable.name" type="text" required maxlength="50">
+      <label for="keepName">Name</label>
+      <input title="Keep name" id="keepName" class="form-control" v-model="editable.name" type="text" required
+        maxlength="50">
     </div>
     <div class="">
       <label for="img">Img Url</label>
@@ -37,6 +38,7 @@ export default {
 
       async createKeep() {
         try {
+          // FIXME don't push new keep into AppState.keeps if I am on another user's profile page
           const formData = editable.value
           await keepsService.createKeep(formData)
           Modal.getOrCreateInstance('#keepForm').hide()

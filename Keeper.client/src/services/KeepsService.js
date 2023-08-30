@@ -10,9 +10,12 @@ class KeepsService {
     AppState.keeps = res.data.map(k => new Keep(k))
     // logger.log('Appstate keeps', AppState.keeps)
   }
-  async getActiveKeep(keepId) {
-    const res = await api.get(`api/keeps/${keepId}`)
-    AppState.activeKeep = new Keep(res.data)
+  async getActiveKeep(keep) {
+
+    // FIXME save the keep to the AppState so then this still works for vault keeps
+    await api.get(`api/keeps/${keep.id}`)
+    keep.views++
+    AppState.activeKeep = keep
   }
   async createKeep(formData) {
     const res = await api.post('api/keeps', formData)

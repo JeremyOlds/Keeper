@@ -44,7 +44,7 @@
 </template>
 
 <script>
-import { computed, onMounted, watchEffect } from 'vue'
+import { computed, watchEffect } from 'vue'
 import { AppState } from './AppState'
 import Navbar from './components/Navbar.vue'
 import ModalComponent from "./components/ModalComponent.vue"

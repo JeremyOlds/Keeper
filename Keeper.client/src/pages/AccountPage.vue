@@ -17,7 +17,7 @@
     <div class="border-dark border-bottom mb-3">
       <h2>Vaults</h2>
     </div>
-    <div class="masonry-with-columns">
+    <div class="masonry-with-columns px-3">
       <div v-for="v in vaults" :key="v.id" class="relative col-md-3 col-12 mb-2 rounded">
         <router-link :to="{ name: 'VaultDetails', params: { vaultId: v.id } }">
           <img class="vault-img" :src="v.img" alt="">
@@ -31,7 +31,7 @@
     <div class="border-bottom border-dark mb-3">
       <h2>Keeps</h2>
     </div>
-    <div class="masonry-with-columns">
+    <div class="masonry-with-columns px-3">
       <div v-for="k in keeps" :key="k.id" class="col-md-3 col-12 my-2">
         <KeepComponent :keep="k" />
       </div>
